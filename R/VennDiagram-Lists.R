@@ -41,6 +41,7 @@ Set.Edges <-
         "Los Angeles Film Critic Association",
       Degree == 1 & Intersections == "NSFC" ~
         "National Society of Film Critics"),
+    Warnings = gsub(" & ", ",", Intersections),
     Intersections = gsub(" & ", "','", Intersections),
     Intersections = paste0("['", Intersections, "']")) %>%
   select(Intersections, Label, Observed.Overlap, everything()) %>%
@@ -56,7 +57,7 @@ cat(sprintf(
       read_file('R/json/template.json'),
         gsub("\\]\"", "\\]",
         gsub("\"\\[", "\\[",
-           prettify(toJSON(Set.Edges %>% select(sets,label,size)),
+           prettify(toJSON(Set.Edges %>% select(sets,label,size,Warnings)),
                indent = 4)))),
     file="output/Venn.json")
 
