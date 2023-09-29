@@ -4,3 +4,4 @@
 *.html linguist-generated
 *.sql linguist-detectable=true
 *.sql linguist-language=sql
+*.sql linguist-vendored=false
