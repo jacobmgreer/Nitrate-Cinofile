@@ -22,25 +22,25 @@ Set.Edges <-
   mutate(
     Label = case_when(
       Degree == 1 & Intersections == "NYT" ~
-        "New York Times' 1000 Essential Films",
+        "NYT 1000 Essential Films",
       Degree == 1 & Intersections == "AFI1" ~
-        "American Film Institute Top 100 1998",
+        "AFI Top 100 1998",
       Degree == 1 & Intersections == "AFI2" ~
-        "American Film Institute Top 100 2007",
+        "AFI Top 100 2007",
       Degree == 1 & Intersections == "EBERT" ~
         "Roger Ebert's 'Great Films'",
       Degree == 1 & Intersections == "NBR" ~
-        "National Board of Review Awards",
+        "National Board of Review",
       Degree == 1 & Intersections == "AMPAS" ~
-        "Academy of Motion Picture Awards",
+        "Academy Awards",
       Degree == 1 & Intersections == "INTL" ~
         "International Submissions to the Academy Awards",
       Degree == 1 & Intersections == "NYFCC" ~
-        "New York Film Critic Circle Awards",
+        "New York Film Critic Circle",
       Degree == 1 & Intersections == "LAFCA" ~
-        "Los Angeles Film Critic Association Awards",
+        "Los Angeles Film Critic Association",
       Degree == 1 & Intersections == "NSFC" ~
-        "National Society of Film Critics Awards"),
+        "National Society of Film Critics"),
     Intersections = gsub(" & ", "','", Intersections),
     Intersections = paste0("['", Intersections, "']")) %>%
   select(Intersections, Label, Observed.Overlap, everything()) %>%
@@ -50,14 +50,13 @@ Set.Edges <-
     label = Label,
     size = Observed.Overlap
   ) %>%
-  select(sets,label,size) %>%
   filter(size != 0)
 
 cat(sprintf(
       read_file('R/json/template.json'),
         gsub("\\]\"", "\\]",
         gsub("\"\\[", "\\[",
-           prettify(toJSON(Set.Edges),
+           prettify(toJSON(Set.Edges %>% select(sets,label,size)),
                indent = 4)))),
     file="output/Venn.json")
 
