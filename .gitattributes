@@ -2,6 +2,6 @@
 *.webarchive linguist-generated
 *.csv linguist-generated
 *.html linguist-generated
-*.sql linguist-detectable=true
-*.sql linguist-language=sql
-*.sql linguist-vendored=false
+*.rq linguist-generated
+*.sparql linguist-detectable=true
+*.sparql linguist-vendored=false
