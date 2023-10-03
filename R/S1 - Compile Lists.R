@@ -1,11 +1,10 @@
-required <- c("tidyverse", "magrittr")
+required <- c("tidyverse", "magrittr", "readr")
 lapply(required, require, character.only = TRUE)
 
 options(readr.show_col_types = FALSE)
 options(dplyr.summarise.inform = FALSE)
 
-formatted <-
-  read_csv("~/Github/Media-Consumption/ratings/formatted.csv") #%>% select(-c(Your.Rating, Date.Rated, IMDb.Rating, Num.Votes, AFI, Theater, Service))
+formatted <- read_csv("~/Github/Media-Consumption/ratings/formatted.csv")
 
 ## load all lists
 lists <-
@@ -21,10 +20,7 @@ for (list in names(lists)) {
       lists[[list]], ~
         case_when(
           . == "FilmID" ~ "Const",
-          TRUE ~ .)) %>%
-    mutate(
-      new_col_one=3,
-      new_col_two=4)
+          TRUE ~ .))
 
   list.crossover[[list]] <-
     rename_with(
@@ -49,14 +45,10 @@ list.crossover <-
 ## seperate all lists into dataframes (only meant for review)
 #list2env(lists,envir=.GlobalEnv)
 
-# missing <-
-#   anti_join(combined, formatted, by="Const") %T>%
-#   write.csv(., "missing.csv", row.names = FALSE)
-#
-# not.listed <-
-#   anti_join(formatted, combined, by="Const") %>%
-#   filter(is.na(Your.Rating)) %>%
-#   select(Const, Year, Title, Title.Type, IMDb.Rating, everything()) %>%
-#   arrange(Year)
+not.listed <-
+  anti_join(formatted, list.crossover, by="Const") %>%
+  filter(is.na(Your.Rating)) %>%
+  select(Const, Year, Title, Title.Type, IMDb.Rating, everything()) %>%
+  arrange(Year)
 
 rm(required, list)
