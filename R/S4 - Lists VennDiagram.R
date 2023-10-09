@@ -61,4 +61,4 @@ cat(sprintf(
                indent = 4)))),
     file="output/Venn.json")
 
-rm(x)
+rm(x, ress)
