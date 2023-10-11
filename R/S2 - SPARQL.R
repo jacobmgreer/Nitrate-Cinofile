@@ -16,28 +16,28 @@ for (i in unique(formatted2$query_grouping)) {
 
   Film.Basics <-
     bind_rows(Film.Basics,
-              query_wikidata(sprintf(read_file('R/Wikidata-SPARQL/Film-Basics.sparql'), subset)))
+              query_wikidata(sprintf(read_file('SPARQL/Film-Basics.sparql'), subset)))
   Film.Genres <-
     bind_rows(Film.Genres,
-              query_wikidata(sprintf(read_file('R/Wikidata-SPARQL/Film-Genres.sparql'), subset)))
+              query_wikidata(sprintf(read_file('SPARQL/Film-Genres.sparql'), subset)))
   Film.MediaType <-
     bind_rows(Film.MediaType,
-              query_wikidata(sprintf(read_file('R/Wikidata-SPARQL/Film-MediaType.sparql'), subset)))
+              query_wikidata(sprintf(read_file('SPARQL/Film-MediaType.sparql'), subset)))
   Film.Distributor <-
     bind_rows(Film.Distributor,
-              query_wikidata(sprintf(read_file('R/Wikidata-SPARQL/Film-Distributor.sparql'), subset)))
+              query_wikidata(sprintf(read_file('SPARQL/Film-Distributor.sparql'), subset)))
   Film.Language <-
     bind_rows(Film.Language,
-              query_wikidata(sprintf(read_file('R/Wikidata-SPARQL/Film-Language.sparql'), subset)))
+              query_wikidata(sprintf(read_file('SPARQL/Film-Language.sparql'), subset)))
   Film.Origin <-
     bind_rows(Film.Origin,
-              query_wikidata(sprintf(read_file('R/Wikidata-SPARQL/Film-Origin.sparql'), subset)))
+              query_wikidata(sprintf(read_file('SPARQL/Film-Origin.sparql'), subset)))
   Film.Production <-
     bind_rows(Film.Production,
-              query_wikidata(sprintf(read_file('R/Wikidata-SPARQL/Film-Production.sparql'), subset)))
+              query_wikidata(sprintf(read_file('SPARQL/Film-Production.sparql'), subset)))
   Film.IA <-
     bind_rows(Film.IA,
-              query_wikidata(sprintf(read_file('R/Wikidata-SPARQL/Film-IA.sparql'), subset)))
+              query_wikidata(sprintf(read_file('SPARQL/Film-IA.sparql'), subset)))
 
   message(paste("Grouping",i,"of",length(unique(formatted2$query_grouping))))}
 
