@@ -4,7 +4,7 @@ lapply(required, require, character.only = TRUE)
 options(readr.show_col_types = FALSE)
 options(dplyr.summarise.inform = FALSE)
 
-formatted <- read_csv("~/Github/Media-Consumption/ratings/formatted.csv")
+formatted <- read_csv("~/Github/Nitrate-Actions/ratings/formatted.csv")
 
 ## load all lists
 lists <-
@@ -49,6 +49,7 @@ not.listed <-
   anti_join(formatted, list.crossover, by="Const") %>%
   filter(is.na(Your.Rating)) %>%
   select(Const, Year, Title, Title.Type, IMDb.Rating, everything()) %>%
-  arrange(Year)
+  arrange(Year) %T>%
+  write.csv(., "output/not.listed.csv", row.names = FALSE)
 
 rm(required, list)
