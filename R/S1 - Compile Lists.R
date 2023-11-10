@@ -8,7 +8,7 @@ formatted <- read_csv("~/Github/Nitrate-Actions/ratings/formatted.csv")
 
 ## load all lists
 lists <-
-  list.files(path = "input/film-lists", pattern = '.csv$', full.names = T) %>%
+  list.files(path = "~/Github/Nitrate-Actions/raw-lists", pattern = '.csv$', full.names = T) %>%
   setNames(., make.names(sub("\\.csv$", "", basename(.)))) %>%
   map(read_csv)
 
@@ -47,9 +47,15 @@ list.crossover <-
 
 not.listed <-
   anti_join(formatted, list.crossover, by="Const") %>%
-  filter(is.na(Your.Rating)) %>%
+  #filter(is.na(Your.Rating)) %>%
   select(Const, Year, Title, Title.Type, IMDb.Rating, everything()) %>%
   arrange(Year) %T>%
   write.csv(., "output/not.listed.csv", row.names = FALSE)
+
+## FOR IMDB
+for.imdb.list <-
+  list.crossover %>%
+  anti_join(., formatted, by="Const") %T>%
+  write.csv(., "output/add.to.imdb.csv", row.names = FALSE)
 
 rm(required, list)
