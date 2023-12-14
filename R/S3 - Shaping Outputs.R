@@ -66,7 +66,7 @@ Film.Production <-
     production = str_c(str_c('"', production, '"'), collapse = ","))
 
 watchlist.dataset <-
-  read_csv("~/Github/Media-Consumption/ratings/formatted.csv") %>%
+  read_csv("~/Github/Nitrate-Actions/ratings/formatted.csv") %>%
   left_join(., Film.Basics, by=c("Const" = "imdb"), relationship = "many-to-many") %>%
   left_join(., Film.Distributor, by="QID") %>%
   left_join(., Film.Genres, by="QID") %>%

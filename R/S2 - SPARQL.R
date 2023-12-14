@@ -2,7 +2,7 @@ required <- c("tidyverse", "magrittr", "WikidataQueryServiceR")
 lapply(required, require, character.only = TRUE)
 
 formatted2 <-
-  read_csv("~/Github/Media-Consumption/ratings/formatted.csv") %>% #select(-c(Your.Rating, Date.Rated, IMDb.Rating, Num.Votes, AFI, Theater, Service))
+  read_csv("~/Github/Nitrate-Actions/ratings/formatted.csv") %>% #select(-c(Your.Rating, Date.Rated, IMDb.Rating, Num.Votes, AFI, Theater, Service))
   mutate(query_grouping = as.integer(gl(n(), 300, n()))) %>%
   distinct(Const, .keep_all = T) %>%
   select(Const, query_grouping)
