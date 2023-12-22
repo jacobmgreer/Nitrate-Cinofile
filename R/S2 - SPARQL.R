@@ -1,8 +1,13 @@
 required <- c("tidyverse", "magrittr", "WikidataQueryServiceR")
 lapply(required, require, character.only = TRUE)
 
+options(readr.show_col_types = FALSE)
+options(dplyr.summarise.inform = FALSE)
+
 formatted2 <-
-  read_csv("~/Github/Nitrate-Actions/ratings/formatted.csv") %>% #select(-c(Your.Rating, Date.Rated, IMDb.Rating, Num.Votes, AFI, Theater, Service))
+  #read_csv("~/Github/Nitrate-Actions/ratings/formatted.csv") %>% #select(-c(Your.Rating, Date.Rated, IMDb.Rating, Num.Votes, AFI, Theater, Service))
+  read_csv("EIDRmissing.csv") %>%
+  rename(Const = tconst) %>%
   mutate(query_grouping = as.integer(gl(n(), 300, n()))) %>%
   distinct(Const, .keep_all = T) %>%
   select(Const, query_grouping)
