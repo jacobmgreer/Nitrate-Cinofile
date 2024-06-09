@@ -5,12 +5,9 @@ options(readr.show_col_types = FALSE)
 options(dplyr.summarise.inform = FALSE)
 
 formatted2 <-
-  #read_csv("~/Github/Nitrate-Actions/ratings/formatted.csv") %>% #select(-c(Your.Rating, Date.Rated, IMDb.Rating, Num.Votes, AFI, Theater, Service))
-  read_csv("EIDRmissing.csv") %>%
-  rename(Const = tconst) %>%
-  mutate(query_grouping = as.integer(gl(n(), 300, n()))) %>%
-  distinct(Const, .keep_all = T) %>%
-  select(Const, query_grouping)
+  read_csv("../Nitrate-Actions/ratings/formatted.csv") %>%
+  distinct(Const) %>%
+  mutate(query_grouping = as.integer(gl(n(), 300, n())))
 
 Film.Basics <- Film.Genres <- Film.MediaType <- Film.Distributor <- NULL
 Film.Language <- Film.Origin <- Film.Production <- Film.IA <- NULL
@@ -44,7 +41,7 @@ for (i in unique(formatted2$query_grouping)) {
     bind_rows(Film.IA,
               query_wikidata(sprintf(read_file('SPARQL/Film-IA.sparql'), subset)))
 
-  message(paste("Grouping",i,"of",length(unique(formatted2$query_grouping))))}
+  message(paste("Grouping", i, "of", length(unique(formatted2$query_grouping))))}
 
 write.csv(Film.Basics, file = "output/SPARQL/Film.Basics.csv", row.names = FALSE)
 write.csv(Film.Distributor, file = "output/SPARQL/Film.Distributor.csv", row.names = FALSE)

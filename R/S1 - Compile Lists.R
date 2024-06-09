@@ -1,14 +1,13 @@
 required <- c("tidyverse", "magrittr", "readr")
 lapply(required, require, character.only = TRUE)
-
 options(readr.show_col_types = FALSE)
 options(dplyr.summarise.inform = FALSE)
 
-formatted <- read_csv("~/Github/Nitrate-Actions/ratings/formatted.csv")
+formatted <- read_csv("../Nitrate-Actions/ratings/formatted.csv")
 
 ## load all lists
 lists <-
-  list.files(path = "~/Github/Nitrate-Actions/raw-lists", pattern = '.csv$', full.names = T) %>%
+  list.files(path = "../Nitrate-Actions/raw-lists", pattern = '.csv$', full.names = T) %>%
   setNames(., make.names(sub("\\.csv$", "", basename(.)))) %>%
   map(read_csv)
 
@@ -51,6 +50,11 @@ not.listed <-
   select(Const, Year, Title, Title.Type, IMDb.Rating, everything()) %>%
   arrange(Year) %T>%
   write.csv(., "output/not.listed.csv", row.names = FALSE)
+
+not.listed.watchlist <-
+  not.listed %>%
+  filter(is.na(Your.Rating)) %T>%
+  write.csv(., "output/not.listed.watchlist.csv", row.names = FALSE)
 
 ## FOR IMDB
 for.imdb.list <-
